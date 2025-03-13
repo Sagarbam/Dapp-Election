@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Election Results</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Content|Saira" rel="stylesheet">
+  <!-- Your external CSS file -->
+  <link rel="stylesheet" href="css/index.css">
+  
+  <!-- Optional inline styles for overlay -->
+  <style>
+    /* Overlay style if you want to display the thank-you message as an overlay */
+    #thankYouOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #thankYouBox {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="index.html">Voting System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="registered.html">Registered ID</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container" style="width: 650px; margin-top: 80px;">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="text-center">Select the candidate</h1>
+        <hr/>
+
+        <!-- Loader -->
+        <div id="loader">
+          <p class="text-center">Loading...</p>
+        </div>
+
+        <!-- Main Content -->
+          <!-- Modern Card-Based Voting UI -->
+          <h3></h3>
+          <div class="row">
+            <!-- Candidate A Card -->
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-body text-center">
+                  <img 
+                    src="kpoli.jpg" 
+                    alt="Candidate A"
+                    class="rounded-circle img-fluid mb-3"
+                    style="width:120px; height:120px; object-fit:cover;"
+                  >
+                  <h4>Candidate A</h4>
+                  <p>Party A</p>
+                  <div class="form-check">
+                    <input 
+                      type="radio"
+                      class="form-check-input"
+                      name="candidateRadio"
+                      value="1"
+                      id="candidateA"
+                      required
+                    >
+                    <label class="form-check-label" for="candidateA">Vote A</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Candidate B Card -->
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-body text-center">
+                  <img 
+                    src="balen.jpg" 
+                    alt="Candidate B"
+                    class="rounded-circle img-fluid mb-3"
+                    style="width:120px; height:120px; object-fit:cover;"
+                  >
+                  <h4>Candidate B</h4>
+                  <p>Party B</p>
+                  <div class="form-check">
+                    <input 
+                      type="radio"
+                      class="form-check-input"
+                      name="candidateRadio"
+                      value="2"
+                      id="candidateB"
+                      required
+                    >
+                    <label class="form-check-label" for="candidateB">Vote B</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Cards Row -->
+
+          <hr/>
+
+          <!-- VOTING FORM -->
+          <form onsubmit="App.castVote(); return false;">
+            <div class="form-group">
+              <label for="voterNumber" class="font-weight-bold">Enter Your Voter Number</label>
+              <input
+                type="number"
+                class="form-control"
+                id="voterNumber"
+                placeholder="Must match the registered number"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Vote</button>
+          </form>
+
+          <hr/>
+          <p id="accountAddress" class="text-center"></p>
+
+          <!-- Link back to the Registration Page -->
+        </div> <!-- End #content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Thank You Overlay (hidden by default) -->
+  <div id="thankYouOverlay">
+    <div id="thankYouBox">
+      <h3>Thank you for voting!</h3>
+      <p>You are ready for the change!</p>
+      <a href="index.html" class="btn btn-success">Home</a>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- Web3, TruffleContract, and app.js -->
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // This function is triggered on form submission
+    App.castVote = async function() {
+      try {
+        // Get candidate and voter number
+        const candidateId = $('input[name="candidateRadio"]:checked').val();
+        const voterNumber = $('#voterNumber').val();
+        if (!candidateId || !voterNumber) {
+          alert('Please select a candidate and enter your voter number.');
+          return;
+        }
+
+        // (Optional) Add your MetaMask connection logic here if not already done in app.js:
+        if (typeof window.ethereum !== 'undefined') {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          App.account = accounts[0];
+          console.log("Connected account:", App.account);
+        } else {
+          alert("MetaMask is not installed. Please install MetaMask to vote.");
+          return;
+        }
+
+        // Call your contract's vote function
+        if (!App.contracts || !App.contracts.Election) {
+          console.log("Contract not initialized. Casting vote locally for demo...");
+          // For demo, simply show the overlay:
+          document.getElementById('thankYouOverlay').style.display = 'flex';
+          return;
+        }
+        const instance = await App.contracts.Election.deployed();
+        const tx = await instance.vote(candidateId, voterNumber, { from: App.account, gas: 300000 });
+        console.log("Transaction success:", tx);
+
+        // On successful transaction, show the Thank You overlay:
+        document.getElementById('thankYouOverlay').style.display = 'flex';
+      } catch (err) {
+        console.error("Error casting vote:", err);
+        alert('Sorry, there was an error processing your vote. Check console for details.');
+      }
+    };
+
+    // Example: once the contract and data are loaded in app.js, hide loader and show content.
+    $(window).load(function() {
+      $("#loader").hide();
+      $("#content").show();
+      console.log("Vote page ready and contract loaded.");
+    });
+  </script>
+    <footer>
+      <p>&copy; Sunil</p>
+    </footer>
+</body>
+</html>

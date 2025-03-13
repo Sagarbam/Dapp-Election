@@ -1,0 +1,233 @@
+/* index.css */
+
+/* ============================= */
+/* GLOBAL STYLES (Shared)       */
+/* ============================= */
+
+/* Google Fonts can remain in HTML or be moved into CSS as @import statements.
+   For simplicity, assume you keep the <link> to Google Fonts in HTML. */
+
+   body {
+    background-color: #f4f4f9;
+    font-family: 'Saira', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Standard container for other pages (e.g., registered.html, index.html, etc.) */
+  .container {
+    max-width: 500px;
+    margin-top: 100px;
+  }
+  
+  /* Standard card style (e.g., for registered.html) */
+  .card {
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  /* Card header (e.g., for registered.html) */
+  .card-header {
+    background-color: #d90000;
+    color: white;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  
+  /* Form labels */
+  .form-group label {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Primary button (e.g., for register, check, etc.) */
+  .btn-primary {
+    background-color: #d90000;
+    border: none;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .btn-primary:hover {
+    background-color: #a50000;
+  }
+  
+  /* Success button (e.g., for "Go to Voting Page") */
+  .btn-success {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Text center (shared) */
+  .text-center {
+    color: #333;
+  }
+  
+  /* Voter status messages (shared) */
+  #voterStatus {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  #voterStatus.error {
+    color: #dc3545;
+  }
+  
+  /* Fixed Footer (shared) */
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Navigation (shared) */
+  .navbar-nav .nav-item .nav-link {
+    color: white;
+  }
+  
+  .navbar-nav .nav-item .nav-link:hover {
+    color: #ccc;
+  }
+  
+  
+  /* ============================= */
+  /* VOTE PAGE-SPECIFIC STYLES     */
+  /* ============================= */
+  /* 1) We apply these only if the body has class="vote-body" */
+/* Body specifically for the vote page */
+body {
+  background-color: #f4f4f9;
+  font-family: 'Saira', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* St
+/* Vote page container */
+.vote-container {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 80px; /* ensures no overlap with the fixed footer */
+}
+
+/* Vote card styling */
+.vote-card {
+  /* Increase minimum width for a larger card footprint */
+  min-width: 220px; /* adjust as desired */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+  /* If you want a bit more vertical space, add a min-height too */
+  min-height: 350px; /* adjust as desired */
+  background-color: #fff;
+}
+
+.vote-card-body {
+  /* Increase padding for more space inside the card */
+  padding: 30px; /* adjust as desired */
+  text-align: center;
+}
+
+.vote-card:hover {
+  transform: scale(1.01);
+}
+
+
+
+/* Candidate name & party */
+.vote-candidate-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.vote-candidate-party {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* Vote button */
+.vote-btn {
+  background-color: #d90000;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.vote-btn:hover {
+  background-color: #a50000;
+}
+
+/* Thank you message */
+.vote-thank-you {
+  display: none; /* hidden by default */
+  text-align: center;
+  color: #28a745;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* registered.css */
+
+body {
+  background-color: #f4f4f9;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.custom-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.custom-card h3 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #d90000;
+  color: white;
+}
+
+/* New registration form styles */
+.register-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.register-form h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}

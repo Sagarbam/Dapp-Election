@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Registered Users</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Your Custom CSS -->
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .custom-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="index.html">Voting System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="registered.html">Registered ID</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container" style="margin-top: 100px; max-width: 600px;">
+    <h1 class="text-center mb-4">Registered Users</h1>
+
+    <!-- Top Card: Register New User -->
+    <div class="custom-card">
+      <h3 class="text-center">Register New User</h3>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="newVoterNumber">Voter Number</label>
+          <input
+            type="number"
+            class="form-control"
+            id="newVoterNumber"
+            placeholder="Enter Voter Number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="newUserName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="newUserName"
+            placeholder="Enter Your Name"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+      </form>
+    </div>
+
+    <!-- Bottom Card: All Registered Users -->
+    <div class="custom-card">
+      <h3 class="text-center">All Registered Users</h3>
+      <p class="text-center" id="totalCount"></p>
+      <!-- Scrollable container to show ~5 rows before scrolling -->
+      <div style="max-height: 200px; overflow-y: auto;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Voter Number</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody id="userData">
+            <!-- Populated by fetchRegisteredUsers() -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Footer -->
+  <footer class="bg-dark text-white text-center py-2 fixed-bottom">
+    <p class="mb-0">&copy; Sunil</p>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <script>
+    // 1) Fetch and display all registered users
+    function fetchRegisteredUsers() {
+      $.ajax({
+        url: 'http://localhost:5000/api/auth/getRegisteredUsers', // Adjust if needed
+        type: 'GET',
+        success: function(response) {
+          const total = response.users.length;
+          $('#totalCount').text('Total: ' + total + ' users');
+
+          // Show all users in the table
+          let userData = '';
+          response.users.forEach((user, index) => {
+            userData += `
+              <tr>
+                <td>${index + 1}</td>
+                <td>${user.number}</td>
+                <td>${user.name}</td>
+              </tr>
+            `;
+          });
+          $('#userData').html(userData);
+        },
+        error: function() {
+          alert('Error fetching data.');
+        }
+      });
+    }
+
+    // 2) Register a new user
+    $('#registerForm').on('submit', function(e) {
+      e.preventDefault();
+      const newVoterNumber = $('#newVoterNumber').val();
+      const newUserName = $('#newUserName').val();
+
+      $.ajax({
+        url: 'http://localhost:5000/api/auth/registerUser', // Adjust if needed
+        type: 'POST',
+        data: JSON.stringify({ number: newVoterNumber, name: newUserName }),
+        contentType: 'application/json',
+        success: function() {
+          alert('User registered successfully!');
+          // Clear the form
+          $('#registerForm')[0].reset();
+          // Refresh the table
+          fetchRegisteredUsers();
+        },
+        error: function(xhr, status, err) {
+          // If the server returns 409, possibly user already exists
+          if (xhr.status === 409) {
+            alert('User with this voter number already exists.');
+          } else {
+            console.error('Error details:', xhr, status, err);
+            alert('Error registering user.');
+          }
+        }
+      });
+    });
+
+    // 3) On page load, fetch all registered users
+    $(document).ready(function() {
+      fetchRegisteredUsers();
+    });
+  </script>
+</body>
+</html>
