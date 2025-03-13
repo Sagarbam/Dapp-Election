@@ -1,76 +1,8 @@
 {
   "users": [
     {
-      "number": "4444",
-      "name": "Alice"
-    },
-    {
-      "number": "5555",
-      "name": "Bob"
-    },
-    {
-      "number": "6666",
-      "name": "Charlie"
-    },
-    {
-      "number": "7777",
-      "name": "Dave"
-    },
-    {
-      "number": "9999",
+      "number": "9988",
       "name": "sagar"
-    },
-    {
-      "number": "8888",
-      "name": "Eve"
-    },
-    {
-      "number": "9999",
-      "name": "sagar"
-    },
-    {
-      "number": "1",
-      "name": "sagar"
-    },
-    {
-      "number": "444",
-      "name": "d"
-    },
-    {
-      "number": "44",
-      "name": "gggg"
-    },
-    {
-      "number": "7",
-      "name": "jjj"
-    },
-    {
-      "number": "5",
-      "name": "sfddf"
-    },
-    {
-      "number": "555",
-      "name": "saga"
-    },
-    {
-      "number": "555555",
-      "name": "f"
-    },
-    {
-      "number": "123",
-      "name": "rajan"
-    },
-    {
-      "number": "88888",
-      "name": "a"
-    },
-    {
-      "number": "55555",
-      "name": "f"
-    },
-    {
-      "number": "12344",
-      "name": "rahul"
     }
   ]
 }
